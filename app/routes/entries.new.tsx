@@ -59,7 +59,7 @@ export default function NewExpense() {
             <span>Date</span>
             <input type="date" name="date" id="date" />
           </label>
-          <select name="category" defaultValue="" multiple>
+          <select name="category" multiple>
             {data.categories.map(category => (
               <option key={category.id} value={category.id}>{category.name}</option>
             ))}
