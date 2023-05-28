@@ -72,8 +72,8 @@ export default function NewExpense() {
               </select>
             </label>
             <div className="flex space-x-2 w-full">
-              <button type="submit" className="bg-green-600 border border-green-700 px-4 py-1 rounded-md text-white">Save</button>
-              <button type="reset" className="border border-gray-400 px-4 py-1 rounded-md text-gray-800">Clear</button>
+              <button type="submit">Save</button>
+              <button type="reset">Clear</button>
             </div>
           </Form>
         </section>
