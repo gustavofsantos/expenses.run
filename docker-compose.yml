@@ -1,0 +1,10 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 29898:3000
+    volumes:
+      - dev.db:/app/dev.db
+      - prod.db:/app/prod.db
