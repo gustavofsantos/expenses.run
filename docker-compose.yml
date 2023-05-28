@@ -3,10 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: prod
     environment:
-      - DATABASE_URL=/app/dev.db
+      - DATABASE_URL=file:/app/app.db
     ports:
       - 29898:3000
     volumes:
-      - dev.db:/app/dev.db
-      - prod.db:/app/prod.db
+      - /home/gustavo/expenses.db:/app/app.db
