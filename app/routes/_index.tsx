@@ -28,8 +28,11 @@ export async function loader({request}: LoaderArgs) {
     include: {categories: {include: {category: true}}}
   })
   let categories = await prisma.category.findMany({orderBy: {createdAt: "desc"}})
+  let totalExpenses = entries.filter(entry => entry.type === "expense").reduce((acc, entry) => acc + entry.value, 0)
+  let totalIncomes = entries.filter(entry => entry.type === "income").reduce((acc, entry) => acc + entry.value, 0)
+  let balance = totalIncomes - totalExpenses
 
-  return {entries, categories, filter: {orderBy, order, fromDate, toDate}}
+  return {entries, categories, totalExpenses, totalIncomes, balance, filter: {orderBy, order, fromDate, toDate}}
 }
 
 export default function Index() {
@@ -39,8 +42,8 @@ export default function Index() {
   }
 
   return (
-    <main className="flex flex-col justify-start items-center pt-4">
-      <article className="w-full px-2 lg:max-w-lg lg:px-0">
+    <main>
+      <article>
         <h1>Entries</h1>
 
         <div className="flex space-x-4 items-center py-4">
@@ -73,20 +76,41 @@ export default function Index() {
                 <input type="date" name="toDate" id="toDate" defaultValue={data.filter.toDate ?? undefined} />
               </label>
             </div>
-            <div>
+            <div className="flex space-x-2">
               <button type="submit">Filter</button>
+              <button type="reset">Reset</button>
             </div>
           </form>
         </section>
 
         <hr />
 
+        <section className="w-full my-4 ">
+          <details>
+            <summary>Stats</summary>
+            <div className="grid grid-cols-3 gap-2 w-full">
+              <div>
+                <h2>Expenses</h2>
+                <p>{formatIntegerToMoney(data.totalExpenses)}</p>
+              </div>
+              <div>
+                <h2>Incomes</h2>
+                <p>{formatIntegerToMoney(data.totalIncomes)}</p>
+              </div>
+              <div>
+                <h2>Balance</h2>
+                <p>{formatIntegerToMoney(data.balance)}</p>
+              </div>
+            </div>
+          </details>
+        </section>
+
         <section className="w-full my-4">
-          <ul>
+          <ul className="divide-y divide-gray-300">
             {data.entries.map(entry => (
-              <li key={entry.id} className="grid grid-cols-[32px_1fr]">
+              <li key={entry.id} className="grid grid-cols-[32px_1fr] py-2">
                 <div className="flex flex-col pt-2 justify-start items-center w-full">
-                  <span className={entry.type === "expense" ? "text-red-500" : "text-green-500"}>
+                  <span className={`${entry.type === "expense" ? "text-red-600" : "text-green-700"} text-lg`}>
                     {entry.type === "expense" ? (
                       <BsArrowLeftCircle />
                     ) : (
@@ -96,10 +120,12 @@ export default function Index() {
                   </span>
                 </div>
                 <div>
-                  <p className="font-bold">{formatIntegerToMoney(entry.value)}</p>
+                  <div className="flex justify-between items-center">
+                    <span className="font-bold">{formatIntegerToMoney(entry.value)}</span>
+                    <span>{new Date(entry.date).toLocaleDateString()}</span>
+                  </div>
                   <p>{entry.description}</p>
-                  <span>{new Date(entry.date).toLocaleDateString()}</span>
-                  <div>
+                  <div className="flex space-x-1">
                     {entry.categories.map(category => (
                       <span className="bg-purple-100 border border-purple-300 text-purple-700 px-1" key={category.categoryId}>{category.category.name}</span>
                     ))}
