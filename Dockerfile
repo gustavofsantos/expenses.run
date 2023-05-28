@@ -1,4 +1,12 @@
 FROM node:current-alpine AS base
+
+ARG NODE_ENV=production
+ARG DATABASE_URL
+
+ENV NODE_ENV=${NODE_ENV}
+ENV DATABASE_URL=${DATABASE_URL}
+ENV PORT=3000
+
 WORKDIR /app
 COPY package*.json ./
 RUN npm install

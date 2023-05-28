@@ -4,9 +4,11 @@ services:
       context: .
       dockerfile: Dockerfile
       target: prod
+      args:
+      - DATABASE_URL=file:/app/expenses.db
     environment:
-      - DATABASE_URL=file:/app/app.db
+    - DATABASE_URL=file:/app/expenses.db
     ports:
-      - 29898:3000
+    - 29898:3000
     volumes:
-      - /home/gustavo/expenses.db:/app/app.db
+    - ./data/expenses.db:/app/app.db

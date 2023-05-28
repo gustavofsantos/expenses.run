@@ -1,5 +1,8 @@
 .git/
 node_modules/
+.cache/
+build/
+data/
 dev.db
 dev.db-journal
 prod.db
