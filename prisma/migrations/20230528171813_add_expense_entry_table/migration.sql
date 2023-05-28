@@ -1,0 +1,10 @@
+-- CreateTable
+CREATE TABLE "Entry" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "value" INTEGER NOT NULL,
+    "type" TEXT NOT NULL,
+    "description" TEXT,
+    "date" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
+);
