@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      - DATABASE_URL=/app/dev.db
     ports:
       - 29898:3000
     volumes:
