@@ -11,18 +11,31 @@ datasource db {
 }
 
 model Entry {
-  id          String   @id @default(uuid())
+  id          String             @id @default(uuid())
   value       Int
   type        String // "income" | "expense"
   description String?
-  date        DateTime @default(now())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  date        DateTime           @default(now())
+  categories  CategoryForEntry[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
 }
 
 model Category {
-  id          String   @id @default(uuid())
-  name        String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String             @id @default(uuid())
+  name      String
+  entries   CategoryForEntry[]
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+}
+
+model CategoryForEntry {
+  entryId    String
+  categoryId String
+  createdAt  DateTime @default(now())
+
+  entry    Entry    @relation(fields: [entryId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@id([entryId, categoryId])
 }
