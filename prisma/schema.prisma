@@ -34,8 +34,8 @@ model CategoryForEntry {
   categoryId String
   createdAt  DateTime @default(now())
 
-  entry    Entry    @relation(fields: [entryId], references: [id])
-  category Category @relation(fields: [categoryId], references: [id])
+  entry    Entry    @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
 
   @@id([entryId, categoryId])
 }
