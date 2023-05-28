@@ -2,11 +2,11 @@ import type {LoaderArgs, V2_MetaFunction} from "@remix-run/node";
 import {Link, useLoaderData} from "@remix-run/react";
 import {prisma} from "~/db.server";
 import {BsArrowLeftCircle, BsArrowRightCircleFill, BsPlus} from "react-icons/bs";
+import {format} from "date-fns"
 
 export const meta: V2_MetaFunction = () => {
   return [
-    {title: "New Remix App"},
-    {name: "description", content: "Welcome to Remix!"},
+    {title: "Expenses"},
   ];
 };
 
@@ -122,8 +122,9 @@ export default function Index() {
                 <div>
                   <div className="flex justify-between items-center">
                     <span className="font-bold">{formatIntegerToMoney(entry.value)}</span>
-                    <span>{new Date(entry.date).toLocaleDateString()}</span>
+                    <Link to={`/entries/${entry.id}`}>Edit</Link>
                   </div>
+                  <span>{format(new Date(entry.date), "dd/MM/yyyy")}</span>
                   <p>{entry.description}</p>
                   <div className="flex space-x-1">
                     {entry.categories.map(category => (
