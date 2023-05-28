@@ -29,7 +29,7 @@ export async function loader({request}: LoaderArgs) {
   })
   let categories = await prisma.category.findMany({orderBy: {createdAt: "desc"}})
 
-  return {entries, categories}
+  return {entries, categories, filter: {orderBy, order, fromDate, toDate}}
 }
 
 export default function Index() {
@@ -58,7 +58,7 @@ export default function Index() {
           <form method="get">
             <label htmlFor="orderBy">
               <span>Order by</span>
-              <select id="orderBy" name="orderBy" defaultValue="date">
+              <select id="orderBy" name="orderBy" defaultValue={data.filter.orderBy ?? "date"}>
                 <option value="date">Date</option>
                 <option value="value">Value</option>
               </select>
@@ -66,11 +66,11 @@ export default function Index() {
             <div className="grid grid-cols-2 gap-2">
               <label htmlFor="fromDate">
                 <span>From</span>
-                <input type="date" name="fromDate" id="fromDate" />
+                <input type="date" name="fromDate" id="fromDate" defaultValue={data.filter.fromDate ?? undefined} />
               </label>
               <label htmlFor="toDate">
                 <span>To</span>
-                <input type="date" name="toDate" id="toDate" />
+                <input type="date" name="toDate" id="toDate" defaultValue={data.filter.toDate ?? undefined} />
               </label>
             </div>
             <div>
