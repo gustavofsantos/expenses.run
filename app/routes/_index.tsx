@@ -55,7 +55,7 @@ export default function Index() {
         </div>
 
         <section className="w-full my-4">
-          <form method="get" className="flex flex-col space-y-2">
+          <form method="get">
             <label htmlFor="orderBy">
               <span>Order by</span>
               <select id="orderBy" name="orderBy" defaultValue="date">
