@@ -16,7 +16,7 @@ RUN npx prisma migrate deploy
 
 FROM base AS prod
 RUN npm run build
-CMD ["./node_modules/.bin/remix-serve", "build"]
+CMD ["npm", "start"]
 
 FROM base AS develop
 CMD ["npm", "run", "dev"]
