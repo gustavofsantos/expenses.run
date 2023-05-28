@@ -1,5 +1,7 @@
 /** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
+  // enable tailwindcss support
+  tailwind: true,
   ignoredRouteFiles: ["**/.*"],
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
