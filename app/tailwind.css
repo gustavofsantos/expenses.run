@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+h1 {
+  @apply text-3xl font-bold text-gray-900 pb-4
+}
+
+h2 {
+  @apply text-2xl font-bold text-gray-900 pb-2
+}
+
+h3 {
+  @apply text-xl font-bold text-gray-900 pb-2
+}
+
+label {
+  @apply flex flex-col w-full
+}
+
+label > span {
+  @apply text-sm font-semibold text-gray-500 pb-1
+}
+
+select {
+  @apply w-full px-4 py-2 border rounded-md bg-gray-100 text-gray-700
+}
+
+select option {
+  @apply bg-white text-gray-700
+}
+
+input {
+  @apply w-full px-4 py-2 border rounded-md bg-gray-100 text-gray-700
+}
+

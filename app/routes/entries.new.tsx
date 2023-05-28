@@ -38,35 +38,46 @@ export default function NewExpense() {
   let data = useLoaderData<typeof loader>()
 
   return (
-    <main>
-      <h1>New expense</h1>
+    <main className="flex flex-col justify-start items-center">
+      <article className="w-full px-2 lg:max-w-lg lg:px-0">
+        <h1>New expense</h1>
 
-      <section>
-        <Form method="post">
-          <select name="type" defaultValue="expense">
-            <option value="expense">Expense</option>
-            <option value="income">Income</option>
-          </select>
-          <label htmlFor="value">
-            <span>Value</span>
-            <input type="number" name="value" id="value" />
-          </label>
-          <label htmlFor="description">
-            <span>Description</span>
-            <input type="text" name="description" id="description" />
-          </label>
-          <label htmlFor="date">
-            <span>Date</span>
-            <input type="date" name="date" id="date" />
-          </label>
-          <select name="category" multiple>
-            {data.categories.map(category => (
-              <option key={category.id} value={category.id}>{category.name}</option>
-            ))}
-          </select>
-          <button type="submit">Save</button>
-        </Form>
-      </section>
+        <section className="w-full">
+          <Form method="post" className="flex flex-col space-y-4 w-full">
+            <label htmlFor="type">
+              <span>Type</span>
+              <select id="type" name="type" defaultValue="expense">
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+              </select>
+            </label>
+            <label htmlFor="value">
+              <span>Value</span>
+              <input type="number" name="value" id="value" />
+            </label>
+            <label htmlFor="description">
+              <span>Description</span>
+              <input type="text" name="description" id="description" />
+            </label>
+            <label htmlFor="date">
+              <span>Date</span>
+              <input type="date" name="date" id="date" />
+            </label>
+            <label htmlFor="category">
+              <span>Categories</span>
+              <select id="category" name="category" multiple>
+                {data.categories.map(category => (
+                  <option key={category.id} value={category.id}>{category.name}</option>
+                ))}
+              </select>
+            </label>
+            <div className="flex space-x-2 w-full">
+              <button type="submit" className="bg-green-600 border border-green-700 px-4 py-1 rounded-md text-white">Save</button>
+              <button type="reset" className="border border-gray-400 px-4 py-1 rounded-md text-gray-800">Clear</button>
+            </div>
+          </Form>
+        </section>
+      </article>
     </main>
   )
 }
