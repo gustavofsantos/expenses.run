@@ -1,4 +1,4 @@
-FROM node:current-alpine AS base
+FROM node:current AS base
 
 ARG NODE_ENV=production
 ARG DATABASE_URL
