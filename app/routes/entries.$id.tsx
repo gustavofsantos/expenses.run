@@ -22,12 +22,12 @@ export async function action({request, params}: ActionArgs) {
     return redirect("/")
   }
 
-  const formData = await request.formData();
-  const value = parseInt(formData.get("value") as string)
-  const description = formData.get("description") as string | null;
-  const date = new Date(formData.get("date") as string);
+  let formData = await request.formData();
+  let value = parseInt(formData.get("value") as string)
+  let description = formData.get("description") as string | null;
+  let date = new Date(formData.get("date") as string);
   // "expense" or "income"
-  const type = formData.get("type") as string;
+  let type = formData.get("type") as string;
   let categories = formData.getAll("category") as string[];
 
   await prisma.entry.update({

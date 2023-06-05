@@ -4,7 +4,7 @@ import {prisma} from "~/db.server";
 import {BsArrowLeftCircle, BsArrowRightCircleFill, BsPlus} from "react-icons/bs";
 import {format} from "date-fns"
 
-export const meta: V2_MetaFunction = () => {
+export let meta: V2_MetaFunction = () => {
   return [
     {title: "Expenses"},
   ];

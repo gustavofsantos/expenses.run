@@ -7,8 +7,8 @@ function slugify(text: string) {
 }
 
 export async function action({request}: ActionArgs) {
-  const formData = await request.formData();
-  const name = formData.get("name") as string;
+  let formData = await request.formData();
+  let name = formData.get("name") as string;
 
   await prisma.category.create({
     data: {
