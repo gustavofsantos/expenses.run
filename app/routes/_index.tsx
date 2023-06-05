@@ -77,7 +77,7 @@ export default function Index() {
               </label>
               <label htmlFor="category">
                 <span>Categories</span>
-                <select id="category" name="category" multiple>
+                <select id="category" size={1} name="category" multiple>
                   {data.categories.map(category => (
                     <option key={category.id} value={category.id}>{category.name}</option>
                   ))}
