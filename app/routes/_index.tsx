@@ -16,12 +16,20 @@ export async function loader({request}: LoaderArgs) {
   let order = url.searchParams.get("order") || "desc"
   let fromDate = url.searchParams.get("fromDate")
   let toDate = url.searchParams.get("toDate")
+  let filterCategories = url.searchParams.getAll("category")
 
   let entries = await prisma.entry.findMany({
     where: {
       date: {
         gte: fromDate ? new Date(fromDate) : undefined,
         lte: toDate ? new Date(toDate) : undefined,
+      },
+      categories: filterCategories.length === 0 ? undefined : {
+        some: {
+          categoryId: {
+            in: filterCategories
+          }
+        }
       }
     },
     orderBy: {[orderBy]: order},
@@ -59,13 +67,23 @@ export default function Index() {
 
         <section className="w-full my-4">
           <form method="get">
-            <label htmlFor="orderBy">
-              <span>Order by</span>
-              <select id="orderBy" name="orderBy" defaultValue={data.filter.orderBy ?? "date"}>
-                <option value="date">Date</option>
-                <option value="value">Value</option>
-              </select>
-            </label>
+            <div className="grid grid-cols-2 gap-2">
+              <label htmlFor="orderBy">
+                <span>Order by</span>
+                <select id="orderBy" name="orderBy" defaultValue={data.filter.orderBy ?? "date"}>
+                  <option value="date">Date</option>
+                  <option value="value">Value</option>
+                </select>
+              </label>
+              <label htmlFor="category">
+                <span>Categories</span>
+                <select id="category" name="category" multiple>
+                  {data.categories.map(category => (
+                    <option key={category.id} value={category.id}>{category.name}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
             <div className="grid grid-cols-2 gap-2">
               <label htmlFor="fromDate">
                 <span>From</span>

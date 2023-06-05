@@ -3,12 +3,13 @@ import {Form, useLoaderData} from "@remix-run/react";
 import {prisma} from "~/db.server";
 
 export async function action({request}: ActionArgs) {
-  const formData = await request.formData();
-  const value = parseInt(formData.get("value") as string)
-  const description = formData.get("description") as string | null;
-  const date = new Date(formData.get("date") as string);
+  let formData = await request.formData();
+  let value = parseInt(formData.get("value") as string)
+  let description = formData.get("description") as string | null;
+  let formDate = formData.get("date") as string | undefined
+  let date = formDate ? new Date(formDate) : undefined;
   // "expense" or "income"
-  const type = formData.get("type") as string;
+  let type = formData.get("type") as string;
   let categories = formData.getAll("category") as string[];
 
   console.log({value, description, date, type, categories})
