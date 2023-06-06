@@ -5,10 +5,33 @@ services:
       dockerfile: Dockerfile
       target: prod
       args:
-      - DATABASE_URL=file:/app/expenses.db
+        DATABASE_URL: postgresql://app:app@database:5432/app_db
     environment:
-    - DATABASE_URL=file:/app/expenses.db
+      DATABASE_URL: postgresql://app:app@database:5432/app_db
     ports:
     - 29898:3000
     volumes:
     - ./data/expenses.db:/app/app.db
+
+  app_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: develop
+      args:
+        DATABASE_URL: postgresql://app:app@database:5432/app_db
+    environment:
+      DATABASE_URL: postgresql://app:app@database:5432/app_db
+    ports:
+    - 29898:3000
+    volumes:
+    - ./data/expenses.db:/app/app.db
+
+  database:
+    image: postgres:15-alpine
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: app
+      POSTGRES_USER: app
+      POSTGRES_DB: app_db
