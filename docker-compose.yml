@@ -8,6 +8,8 @@ services:
         DATABASE_URL: postgresql://app:app@database:5432/app_db
     environment:
       DATABASE_URL: postgresql://app:app@database:5432/app_db
+    depends_on:
+      - database
     ports:
     - 29898:3000
     volumes:
@@ -22,6 +24,8 @@ services:
         DATABASE_URL: postgresql://app:app@database:5432/app_db
     environment:
       DATABASE_URL: postgresql://app:app@database:5432/app_db
+    depends_on:
+      - database
     ports:
     - 29898:3000
     volumes:
@@ -37,6 +41,16 @@ services:
       POSTGRES_DB: app_db
     volumes:
       - database-data:/var/lib/postgresql/data
+
+  pg_admin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "user@email.com"
+      PGADMIN_DEFAULT_PASSWORD: "password"
+    ports:
+      - '16543:80'
+    depends_on:
+      - database
 
 volumes:
   database-data:
